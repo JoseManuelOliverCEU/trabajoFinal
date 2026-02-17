@@ -7,8 +7,28 @@ pipeline {
 
   stages {
     stage('Checkout') {
+      steps { checkout scm }
+    }
+
+    stage('Create .env (from Jenkins credentials)') {
       steps {
-        checkout scm
+        withCredentials([
+          string(credentialsId: 'mariadb-password', variable: 'DB_PASS'),
+          string(credentialsId: 'mariadb-root-password', variable: 'DB_ROOT_PASS')
+        ]) {
+          sh '''
+            cat > .env <<EOF
+MARIADB_DATABASE=trabajoFinal
+MARIADB_USER=trabajoFinal
+MARIADB_PASSWORD=${DB_PASS}
+MARIADB_ROOT_PASSWORD=${DB_ROOT_PASS}
+
+DATABASE_URL=mysql+pymysql://trabajoFinal:${DB_PASS}@db:3306/trabajoFinal
+API_BASE_URL=http://127.0.0.1:5000/api
+EOF
+            echo ".env generated (secrets hidden)"
+          '''
+        }
       }
     }
 
@@ -21,21 +41,19 @@ pipeline {
     stage('Up DB') {
       steps {
         sh 'docker-compose up -d db'
-        // Muestra estado (la health puede tardar unos segundos)
         sh 'docker-compose ps'
       }
     }
 
     stage('Run Tests') {
       steps {
-        // Tests dentro del contenedor web (mismo entorno)
+        // IMPORTANTE: apunta explícitamente a tests para que no salga "no tests ran"
         sh 'docker-compose run --rm web pytest -q tests --cov=app --cov-report=term-missing'
       }
     }
 
     stage('Migrate + Seed') {
       steps {
-        // Aplica migraciones y seed ANTES de desplegar
         sh 'docker-compose run --rm web flask --app wsgi:app db upgrade'
         sh 'docker-compose run --rm web flask --app wsgi:app seed'
       }
@@ -43,7 +61,6 @@ pipeline {
 
     stage('Deploy (local)') {
       steps {
-        // Levanta todo
         sh 'docker-compose up -d'
       }
     }
@@ -52,8 +69,6 @@ pipeline {
   post {
     always {
       sh 'docker-compose ps'
-      // Útil si algo falla:
-      // sh 'docker-compose logs --no-color --tail=200'
     }
   }
 }

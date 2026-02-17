@@ -21,6 +21,8 @@ services:
 
   web:
     build: .
+    env_file:
+      - .env
     volumes:
       - .:/app
     environment:
