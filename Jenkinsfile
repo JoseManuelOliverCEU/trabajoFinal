@@ -29,7 +29,7 @@ pipeline {
     stage('Run Tests') {
       steps {
         // Tests dentro del contenedor web (mismo entorno)
-        sh 'docker-compose run --rm web pytest -q --cov=app --cov-report=term-missing'
+        sh 'docker-compose run --rm web pytest -q tests --cov=app --cov-report=term-missing'
       }
     }
 
