@@ -5,32 +5,30 @@ pipeline {
     COMPOSE_PROJECT_NAME = "trabajofinal"
   }
 
-  stages {
-    stage('Checkout') {
-      steps { checkout scm }
-    }
+  stage('Create .env (from Jenkins credentials)') {
+    steps {
+      withCredentials([
+        string(credentialsId: 'mariadb-database', variable: 'DB_NAME'),
+        string(credentialsId: 'mariadb-user', variable: 'DB_USER'),
+        string(credentialsId: 'mariadb-password', variable: 'DB_PASS'),
+        string(credentialsId: 'mariadb-root-password', variable: 'DB_ROOT_PASS')
+      ]) {
+        sh '''
+          cat > .env <<EOF
+          MARIADB_DATABASE=${DB_NAME}
+          MARIADB_USER=${DB_USER}
+          MARIADB_PASSWORD=${DB_PASS}
+          MARIADB_ROOT_PASSWORD=${DB_ROOT_PASS}
 
-    stage('Create .env (from Jenkins credentials)') {
-      steps {
-        withCredentials([
-          string(credentialsId: 'mariadb-password', variable: 'DB_PASS'),
-          string(credentialsId: 'mariadb-root-password', variable: 'DB_ROOT_PASS')
-        ]) {
-          sh '''
-            cat > .env <<EOF
-MARIADB_DATABASE=trabajoFinal
-MARIADB_USER=trabajoFinal
-MARIADB_PASSWORD=${DB_PASS}
-MARIADB_ROOT_PASSWORD=${DB_ROOT_PASS}
-
-DATABASE_URL=mysql+pymysql://trabajoFinal:${DB_PASS}@db:3306/trabajoFinal
-API_BASE_URL=http://127.0.0.1:5000/api
-EOF
-            echo ".env generated (secrets hidden)"
-          '''
-        }
+          DATABASE_URL=mysql+pymysql://${DB_USER}:${DB_PASS}@db:3306/${DB_NAME}
+          API_BASE_URL=http://127.0.0.1:5000/api
+          EOF
+          echo ".env generated"
+        '''
       }
     }
+  }
+
 
     stage('Build') {
       steps {
