@@ -32,3 +32,4 @@ def seed_teams():
             created += 1
     db.session.commit()
     return created
+
