@@ -34,7 +34,10 @@ services:
       db:
         condition: service_healthy
     command: >
-      sh -c "gunicorn -b 0.0.0.0:5000 wsgi:app"
+      sh -c "
+      flask --app wsgi:app db upgrade &&
+      flask --app wsgi:app seed &&
+      gunicorn -b 0.0.0.0:5000 wsgi:app"
 
 
 

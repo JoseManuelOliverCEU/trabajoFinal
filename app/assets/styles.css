@@ -1,0 +1,159 @@
+:root{
+  --bg:#0b1220;
+  --card:#111a2e;
+  --muted:#98a2b3;
+  --text:#e5e7eb;
+  --border:#22304a;
+  --primary:#4f46e5;
+  --primary2:#6366f1;
+  --danger:#ef4444;
+  --success:#22c55e;
+  --shadow: 0 12px 30px rgba(0,0,0,.35);
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  background: radial-gradient(1200px 600px at 20% 0%, #162242 0%, var(--bg) 55%);
+  color:var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+}
+
+.container{
+  max-width:1100px;
+  margin:28px auto;
+  padding:0 14px;
+}
+
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:14px;
+}
+
+.title{
+  font-size:28px;
+  font-weight:800;
+  letter-spacing:.2px;
+  margin:0;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background: rgba(255,255,255,.04);
+  color:var(--muted);
+  font-weight:600;
+}
+
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow: var(--shadow);
+  padding:16px;
+}
+
+.card h3{
+  margin:0 0 10px;
+  font-size:18px;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  align-items:center;
+}
+
+label.small{
+  font-size:12px;
+  color:var(--muted);
+}
+
+input{
+  background: rgba(255,255,255,.06);
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:10px 12px;
+  outline:none;
+  min-width:170px;
+}
+
+input::placeholder{ color: rgba(229,231,235,.55); }
+input:focus{
+  border-color: rgba(99,102,241,.65);
+  box-shadow: 0 0 0 4px rgba(99,102,241,.18);
+}
+
+button{
+  background: linear-gradient(180deg, var(--primary2), var(--primary));
+  color:white;
+  border:0;
+  border-radius:12px;
+  padding:10px 14px;
+  font-weight:700;
+  cursor:pointer;
+  transition: transform .05s ease, filter .2s ease;
+}
+button:hover{ filter:brightness(1.05); }
+button:active{ transform: translateY(1px); }
+
+button.secondary{
+  background: rgba(255,255,255,.07);
+  border:1px solid var(--border);
+}
+button.danger{
+  background: linear-gradient(180deg, #fb7185, var(--danger));
+}
+button.ghost{
+  background: transparent;
+  border:1px solid var(--border);
+}
+
+.msg{
+  margin:10px 0 0;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background: rgba(255,255,255,.05);
+  color: var(--text);
+}
+
+.msg.success{ border-color: rgba(34,197,94,.35); }
+.msg.error{ border-color: rgba(239,68,68,.35); }
+
+hr{
+  border:none;
+  border-top:1px solid var(--border);
+  margin:14px 0;
+}
+
+/* Dash DataTable tweaks */
+.dash-table-container .dash-spreadsheet-container{
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid var(--border);
+}
+.dash-table-container .dash-spreadsheet-container .dash-spreadsheet-inner{
+  background: rgba(255,255,255,.03);
+}
+.dash-table-container .dash-header{
+  background: rgba(79,70,229,.18) !important;
+  color: var(--text) !important;
+  font-weight:800 !important;
+  border-bottom:1px solid var(--border) !important;
+}
+.dash-table-container .dash-cell{
+  background: transparent !important;
+  color: var(--text) !important;
+  border-bottom:1px solid rgba(34,48,74,.65) !important;
+}

@@ -1,5 +1,6 @@
+import os
 from .extensions import db
-from .models import Team
+from .models import Team, User
 
 PL_2526 = [
     "Arsenal",
@@ -33,3 +34,26 @@ def seed_teams():
     db.session.commit()
     return created
 
+def seed_users():
+    admin_username = os.getenv("ADMIN_USERNAME")
+    admin_password = os.getenv("ADMIN_PASSWORD")
+
+    user_username = os.getenv("USER_USERNAME")
+    user_password = os.getenv("USER_PASSWORD")
+
+    if not admin_password or not user_password:
+        raise RuntimeError("Usuario y Contraseña incorrectos")
+
+    # Admin
+    if not User.query.filter_by(username=admin_username).first():
+        admin = User(username=admin_username, role="admin")
+        admin.set_password(admin_password)
+        db.session.add(admin)
+
+    # Usuario normal
+    if not User.query.filter_by(username=user_username).first():
+        user = User(username=user_username, role="user")
+        user.set_password(user_password)
+        db.session.add(user)
+
+    db.session.commit()

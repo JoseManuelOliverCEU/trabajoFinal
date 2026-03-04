@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from .extensions import db
 from .models import Team
+from flask_login import login_required
+from .security import admin_required
 
 api_bp = Blueprint("api", __name__, url_prefix="/api")
 
@@ -9,6 +11,7 @@ def health():
     return jsonify(status="ok")
 
 @api_bp.get("/teams")
+@login_required
 def list_teams():
     teams = Team.query.order_by(Team.name.asc()).all()
     return jsonify([t.to_dict() for t in teams])
@@ -19,6 +22,7 @@ def get_team(team_id):
     return jsonify(t.to_dict())
 
 @api_bp.post("/teams")
+@admin_required
 def create_team():
     data = request.get_json(force=True)
 
@@ -40,6 +44,7 @@ def create_team():
     return jsonify(t.to_dict()), 201
 
 @api_bp.put("/teams/<int:team_id>")
+@admin_required
 def update_team(team_id):
     t = Team.query.get_or_404(team_id)
     data = request.get_json(force=True)
@@ -65,6 +70,7 @@ def update_team(team_id):
     return jsonify(t.to_dict())
 
 @api_bp.delete("/teams/<int:team_id>")
+@admin_required
 def delete_team(team_id):
     t = Team.query.get_or_404(team_id)
     db.session.delete(t)

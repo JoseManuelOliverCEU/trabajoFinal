@@ -1,5 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 db = SQLAlchemy()
-migrate = Migrate(directory="app/migrations")
+migrate = Migrate(directory="migrations")
+login_manager = LoginManager()
