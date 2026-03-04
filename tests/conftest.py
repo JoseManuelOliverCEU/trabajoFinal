@@ -1,7 +1,10 @@
 import os
+import sys
 import pytest
 from app import create_app
 from app.extensions import db
+
+sys.path.append("/app")
 
 @pytest.fixture()
 def app():
