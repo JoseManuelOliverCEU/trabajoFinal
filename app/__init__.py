@@ -25,7 +25,7 @@ def create_app():
         return User.query.get(int(user_id))
 
     # Blueprints
-    app.register_blueprint(api_bp)
+    app.register_blueprint(api_bp, url_prefix="/api")
     app.register_blueprint(auth_bp)
 
     # Dash

@@ -371,7 +371,7 @@ A09 — Security Logging and Monitoring Failures
 
 # 📂 Tests automáticos
 
-El proyecto incluye tests con **pytest**.
+El proyecto incluye tests unitarios con pytest.
 
 
 pytest
@@ -382,6 +382,29 @@ Ubicación:
 
 tests/
 
+---
+
+## Tests de API con Postman
+
+Se incluye una colección de Postman en:
+
+postman/trabajoFinal_postman_collection.json
+
+### Importar la colección
+
+1. Abrir Postman
+2. Pulsar **Import**
+3. Seleccionar el archivo JSON
+4. Ejecutar la colección con **Collection Runner**
+
+La colección incluye tests para:
+
+- Health check
+- Login
+- Crear equipo
+- Modificar equipo
+- Borrar equipo
+- Tests de seguridad
 
 ---
 
