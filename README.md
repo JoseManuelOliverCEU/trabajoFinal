@@ -187,6 +187,15 @@ Ventajas:
 
 ---
 
+# 🌿 Control de versiones
+
+Se ha utilizado Git con:
+- rama main
+- ramas de desarrollo para nuevas funcionalidades
+- merge posterior mediante pull requests
+
+---
+
 # 🔐 Seguridad (OWASP Top 10)
 
 Se aplican varias prácticas de seguridad:
@@ -366,6 +375,11 @@ A09 — Security Logging and Monitoring Failures
         docker-compose.yml
 
         Además Jenkins registra cada ejecución del pipeline.
+
+También se han aplicado buenas prácticas de seguridad en la API:
+- autenticación en endpoints
+- control de permisos
+- validación de datos
 
 ---
 
