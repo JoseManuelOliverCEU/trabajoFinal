@@ -4,6 +4,7 @@ Aplicación web desarrollada con **Flask + Dash** para gestionar equipos de fút
 
 El proyecto demuestra un despliegue seguro utilizando:
 
+-Python
 - Docker
 - Jenkins (CI/CD)
 - API REST
@@ -37,7 +38,7 @@ GitHub → Jenkins → Docker → Tests
 ## 1️⃣ Clonar el repositorio
 
 
-git clone https://github.com/usuario/trabajoFinal.git
+git clone https://github.com/JoseManuelOliverCEU/trabajoFinal.git
 
 cd trabajoFinal
 
